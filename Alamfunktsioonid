@@ -1,0 +1,130 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Metrics;
+using System.Text;
+
+namespace KontroltööTar1Rud
+{
+    public class Alamfunktsioonid
+    {
+        public static void Kytusekalculator()
+        {
+
+
+            Console.Write("Mis on teie läbitud teepikkus? (km-na, komaga, nt 172,1): ");
+            float teepikkus = float.Parse(Console.ReadLine());
+
+            Console.Write("Mis on teie kütusekulu 100km eest? (litritena, komaga, nt 6,7): ");
+            float kütusekulu100kmeest = float.Parse(Console.ReadLine());
+
+            Console.Write("Mis on kütuse liitri hind?: ");
+            float kütusehind = float.Parse(Console.ReadLine());
+
+
+            float kütusekulu = kütusekulu100kmeest * teepikkus;
+            float reisimaksumus = kütusehind * kütusekulu;
+
+            Console.WriteLine(kütusekulu);
+            Console.WriteLine(reisimaksumus);
+
+
+            Console.WriteLine("Teie reisi statiistika:");
+            Console.WriteLine($"Kütuse kulu oli: {Math.Round(kütusekulu, 2)} liitrit");
+            Console.WriteLine($"Reisimaksimus oli {Math.Round(reisimaksumus, 2)} eurot");
+        }
+
+        public static void HindaIsikukood(string isikukood)
+        {
+            string esimeneArv = isikukood[0].ToString();
+            string sugu = "";
+            switch (esimeneArv)
+            {
+                default:
+                    sugu = "Tundmatu";
+                    break;
+                case "1":
+                case "3":
+                case "5":
+                    sugu = "mees";
+                    break;
+                case "2":
+                case "4":
+                case "6":
+                    sugu = "naine";
+                    break;
+            }
+
+            string sünniaasta = isikukood.Substring(1, 2);
+            string sünnikuu = isikukood.Substring(3, 2);
+            string sünnipäev = isikukood.Substring(5, 2);
+
+
+            Console.WriteLine($"Oled {sugu}, sündinud {sünnipäev}.{sünnikuu}.{sünniaasta}");
+
+        }
+
+
+        public static void TaringuMang()
+        {
+            int mituKorda = 10;
+            List<List<int>> mängud = new List<List<int>>();
+
+            Random rnd = new Random();
+
+            for (int i = 0; i < mituKorda; i++)
+            {
+                List<int> mäng = new List<int>();
+                mäng.Add(rnd.Next(1, 7));
+                mäng.Add(rnd.Next(1, 7));
+                mängud.Add(mäng);
+            }
+
+            Console.WriteLine("Tulemused 10 mängu eest: ");
+
+            int samad = 0;
+            int summa = 0;
+            for (int i = 0; i < mängud.Count; i++)
+            {
+                List<int> mäng = mängud[i];
+                int esimeneArv = mäng[0];
+                int teineArv = mäng[1];
+                if (esimeneArv == teineArv)
+                {
+                    samad += 1;
+                }
+                summa += esimeneArv;
+                summa += teineArv;
+
+                Console.WriteLine($"{i}. {esimeneArv} {teineArv}");
+            }
+
+            Console.WriteLine($"Mõlemad täringud oli samad {samad} korda");
+            Console.WriteLine($"Kõikide täringute summa on {summa}");
+        }
+
+        public static Tuple<double, double> ArvutaPalk(double brutopalk)
+        {
+            double maksuvabatulu = 0;
+
+            if (brutopalk < 1200)
+            {
+                maksuvabatulu = 654;
+            }
+
+            double tulubaas = brutopalk - maksuvabatulu;
+
+            if (tulubaas < 0)
+            {
+                tulubaas = 0;
+            }
+
+            double tulumaks = tulubaas * 0.20;
+            double tookindlustus = brutopalk * 0.016;
+            double kogumispension = brutopalk * 0.02;
+
+            double netopalk = brutopalk - tulumaks - tookindlustus - kogumispension;
+
+            return new Tuple<double, double>(maksuvabatulu, netopalk);
+        }
+    }
+}
