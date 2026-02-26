@@ -1,0 +1,65 @@
+using System;
+
+namespace KontroltööTar1Rud
+{
+    public class StartPage
+    {
+        public static void Main(string[] args)
+        {
+
+            {
+                Console.WriteLine("Tere tulemast minu programmisse!");
+
+                while (true)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Vali tegevus:");
+                    Console.WriteLine("1 - Kütuse kalkulaator");
+                    Console.WriteLine("2 - Isikukoodi analüüs");
+                    Console.WriteLine("3 - Täringumäng");
+                    Console.WriteLine("4 - Palgaarvestus");
+                    Console.WriteLine("0 - Välju");
+
+                    Console.WriteLine("Sinu valik: ");
+                    string valik = Console.ReadLine();
+
+                    switch (valik)
+                    {
+                        default:
+                            break;
+                        case "1":
+                            Alamfunktsioonid.Kytusekalculator();
+                            break;
+                        case "2":
+                            Console.Write("Sisesta palun isikukood: ");
+                            string isikukood = Console.ReadLine();
+                            Alamfunktsioonid.HindaIsikukood(isikukood);
+                            break;
+                        case "3":
+                            Alamfunktsioonid.TaringuMang();
+                            break;
+
+
+                        case "4":
+                            Console.WriteLine("Sisesta brutopalk:");
+                            double bruto = Convert.ToDouble(Console.ReadLine());
+
+                            var tulemus = Alamfunktsioonid.ArvutaPalk(bruto);
+
+                            Console.WriteLine("Maksuvaba tulu: " + tulemus.Item1);
+                            Console.WriteLine("Netopalk: " + tulemus.Item2);
+                            break;
+
+
+                            break;
+                        case "0":
+                            Console.Clear();
+                            Console.WriteLine("Äitah kasutamise eest! Tulge tagasi mõni kord veel.");
+                            return;
+                    }
+
+                }
+            }
+        }
+    }
+}
